@@ -1,0 +1,110 @@
+/* infoComponent's private CSS styles */
+.info {
+    margin: 0 0 2em 0;
+    list-style-type: none;
+    padding: 0;
+  }
+  .info li {
+    position: relative;
+    cursor: pointer;
+    background-color: #EEE;
+    margin: .5em;
+    padding: .3em 0;
+    height: 1.6em;
+    border-radius: 4px;
+    width: 320px;
+  }
+  
+  .info li:hover {
+    color: #607D8B;
+    background-color: #DDD;
+    left: .1em;
+  }
+  
+  .info a, .info input {
+    color: #333;
+    text-decoration: none;
+    position: relative;
+    display: block;
+    
+    line-height: 1.6em;
+    background-color: transparent;
+    border: 0px;
+
+    width:90%;
+
+  }
+  
+  .info a:hover {
+    color: #607D8B;
+  }
+  
+  .info .badge {
+    font-size: small;
+    color: white;
+    padding: 0.55em 0.7em;
+    background-color: #405061;
+    position: relative;
+    left: 0px;
+    top: -6px;
+    min-width: 16px;
+    text-align: right;
+    margin-right: 0.4em;
+    border-radius: 4px 0 0 4px;
+  }
+
+  .info .txtrow {
+    width: 75%;
+    overflow: hidden;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    text-overflow: ellipsis;
+
+  }
+
+  .info #addItem {
+    background-color: #405061;
+    top: -26.5px;
+    left: 293px;
+  }
+  .info #updateItem{
+    background-color: #405061;
+  }
+  
+  button {
+    background-color: #eee;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    cursor: hand;
+    font-family: Arial;
+  }
+  
+  button:hover {
+    background-color: #cfd8dc;
+  }
+  
+  button.delete {
+    
+    background-color: gray !important;
+    
+    
+  }
+  button.rght{
+    position: relative;
+    left: 41.5px;
+    top: -6.5px;
+  }
+  button.svg { 
+    padding: 7px;
+  }
+  
+  
+  
+  /*
+  Copyright Google LLC. All Rights Reserved.
+  Use of this source code is governed by an MIT-style license that
+  can be found in the LICENSE file at https://angular.io/license
+  */

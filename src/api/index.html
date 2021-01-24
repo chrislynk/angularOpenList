@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function(){
+
+    $(".one").click(function(){
+      $.get("read.php", { "title":"Books", "template":"List" },function(data, status){
+        alert("Data: " + data + "\nStatus: " + status);
+      });
+    });
+
+    $(".all").click(function(){
+      $.get("read.php",function(data, status){
+        alert("Data: " + data + "\nStatus: " + status);
+      });
+    });
+
+    $(".name").click(function(){
+      $.get("read.php",{"template":"List"}, function(data, status){
+        alert("Data: " + data + "\nStatus: " + status);
+      });
+    });
+
+    $(".contains").click(function(){
+      $.get("read.php",{"contains":"This"}, function(data, status){
+        alert("Data: " + data + "\nStatus: " + status);
+      });
+    });
+
+    $(".update").click(function(){
+
+      var data0 = {"id":10, "title":"This BE New", "content":["BE Old", "Be Knee"], "template":"List"};
+      var json = JSON.stringify(data0);
+
+      $.ajax({
+        url: "update.php",
+        type: "PUT",
+        data: json,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(data, status){
+          alert("Data: " + data + "\nStatus: " + status);
+        }
+      });
+
+    });
+    
+  });
+</script>
+</head>
+<body>
+<h3>READ</h3>
+<button class="all">Get All</button>
+<button class="one">Get One</button>
+<br/>
+<button class="name">Get List</button>
+<button class="contains">Get Contains</button>
+<h3>UPDATE</h3>
+<button class="update">Update This</button>
+
+</body>
+</html>

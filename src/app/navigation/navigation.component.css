@@ -1,0 +1,35 @@
+#breadcrumb {
+    position: fixed;
+    top: 55px;
+    left: 0;
+    width: 100%;
+}
+.sticky{
+    top: 0 !important;
+    overflow: hidden;
+    z-index: 10;
+  }
+
+ul.breadcrumb {
+    padding: 8px 4px;
+    list-style: none;
+    background-color: #fff;
+    margin: 0px;
+  }
+  ul.breadcrumb li {
+    display: inline;
+    font-size: 14px;
+  }
+  ul.breadcrumb li+li:before {
+    padding: 4px;
+    color: black;
+    content: "/\00a0";
+  }
+  ul.breadcrumb li a {
+    color: #0275d8;
+    text-decoration: none;
+  }
+  ul.breadcrumb li a:hover {
+    color: #01447e;
+    text-decoration: underline;
+  }

@@ -1,0 +1,28 @@
+
+  <div *ngIf="error">{{error}}</div>
+  <div *ngIf="success">{{success}}</div>
+
+  <div>
+    <label>Name:
+      <input #listName />
+    </label>
+    <!-- (click) passes input value to add() and then clears the input -->
+    <button (click)="addInfo(listName.value); listName.value=''">
+      add List
+    </button>
+  </div>
+
+<div id="theList" class="card-container">
+ 
+    <a class="card" rel="noopener" *ngFor="let info of information" routerLink="/{{info.template|lowercase}}/{{info.title.split(' ').join('_')}}">
+      
+      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M4 14h4v-4H4v4zm0 5h4v-4H4v4zM4 9h4V5H4v4zm5 5h12v-4H9v4zm0 5h12v-4H9v4zM9 5v4h12V5H9z"/></svg>
+      
+      <span>{{info.title}}</span>
+      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+      <button title="delete item" class="delete svg right-top"><svg  xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" style="fill: white;"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg></button>
+    </a>
+    <button title="delete item" class="delete svg right-top"><svg  xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" style="fill: white;"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg></button>
+    
+
+</div>
