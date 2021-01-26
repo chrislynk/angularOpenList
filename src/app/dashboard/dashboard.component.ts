@@ -29,8 +29,6 @@ export class DashboardComponent implements OnInit {
     this.infoService.getAll().subscribe(
       (res: Info[]) => {
         this.information = res;
-        this.safeTitle[res["title"]] = res["title"].split(' ').join('+');
-        console.log(this.safeTitle);
       },
       (err) => {
         this.error = err;

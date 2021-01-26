@@ -33,7 +33,7 @@ export class ListComponent implements OnInit {
   getInfo(): void {
     this.success = ''; this.error = ''; this.search = ''; this.selected = '';
     const title = this.route.snapshot.paramMap.get('title')?this.route.snapshot.paramMap.get('title').split('_').join(' '):null;
-    console.log(title);
+ 
     if(title){
       this.infoService.getTitle(title,"List").subscribe(
         (res: Info) => {
