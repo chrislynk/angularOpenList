@@ -5,7 +5,7 @@
 
 <h2>{{title}}</h2>
 <input #searchBox id="search-box" />
-    <button id="addItem" title="add item" class="svg rght" (click)="addInfo(searchBox.value); searchBox.value=''">
+    <button id="addItem" title="add item" class="svg rght" (click)="addContent(searchBox.value); searchBox.value=''">
       <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" style="fill: white;">
         <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
       </svg></button>
@@ -14,15 +14,15 @@
  
   <a class="card" rel="noopener" *ngFor="let item of content">
     
-    <svg *ngIf="selected!=item" class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" (click)="selectInfo(item)"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+    <svg *ngIf="selected!=item" class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" (click)="selectContent(item)"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
     <span *ngIf="selected!=item">{{item}}</span>
-    <svg *ngIf="selected!=item" class="material-icons spacer" xmlns="http://www.w3.org/2000/svg" width="8px" height="8px" viewBox="0 0 24 24" (click)="selectInfo(item)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg> 
+    <svg *ngIf="selected!=item" class="material-icons spacer" xmlns="http://www.w3.org/2000/svg" width="8px" height="8px" viewBox="0 0 24 24" (click)="selectContent(item)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg> 
     <span *ngIf="selected==item">
       <input #selectedBox id="selectedBox" value="{{item}}" />
-      <button id="update" class="svg right" title="update item" (click)="updateSelected(selectedBox.value)"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" transform="rotate(-90)"><path d="M 13.41 12 L 6.41 5 L 5 6.41 L 5 17.59 L 6.41 19 z"></path></svg>
+      <button id="update" class="svg right" title="update item" (click)="updateContent(selectedBox.value)"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" transform="rotate(-90)"><path d="M 13.41 12 L 6.41 5 L 5 6.41 L 5 17.59 L 6.41 19 z"></path></svg>
       </button>
     </span>
-    <button *ngIf="selected!=item" title="delete item" class="delete svg right-top"><svg  xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" style="fill: white;" (click)="deleteInfo(item)"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg></button>
+    <button *ngIf="selected!=item" title="delete item" class="delete svg right-top"><svg  xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" style="fill: white;" (click)="deleteContent(item)"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg></button>
 
   </a>
 

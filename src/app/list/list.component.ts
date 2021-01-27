@@ -55,6 +55,7 @@ export class ListComponent implements OnInit {
         }
       );
     }
+
   }
 
   updateInfo(title:string, content, id:number) {
@@ -69,12 +70,12 @@ export class ListComponent implements OnInit {
       );
   }
 
-  addInfo(item:string) {
+  addContent(item:string) {
     this.content.push(item);
     this.updateInfo( this.title, this.content, +this.id );
   }
 
-  deleteInfo(item:string) {
+  deleteContent(item:string) {
     for (let c in this.content) {
       if(this.content[c] == item){ 
         const i = +c;
@@ -84,12 +85,11 @@ export class ListComponent implements OnInit {
     }
   }
 
-  selectInfo(item:string){
+  selectContent(item:string){
     this.selected = item;
-    
   }
 
-  updateSelected(item:string){
+  updateContent(item:string){
     for (let c in this.content) {
       if(this.content[c] == this.selected){ 
         const i = +c;
