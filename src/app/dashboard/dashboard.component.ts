@@ -68,9 +68,7 @@ export class DashboardComponent implements OnInit {
   }
 
   addInfo(name: string): void {
-    console.log(name);
     name = name.trim();
-  
     this.infoService.addInfo(name)
       .subscribe(
         (res: Info[]) => {
@@ -82,12 +80,17 @@ export class DashboardComponent implements OnInit {
       );
   }
 
-  deleteInfo(name:string): void {
-    for (let c in this.information) {
-      if(c["title"] == name){ 
-        this.infoService.deleteInfo(c["id"]);
-      }
-    }
+  deleteInfo(id:number): void {
+
+    this.infoService.deleteInfo(id)
+    .subscribe(
+      (res: Info[]) => {
+        this.information = res;
+        this.success = 'Deleted Successfully';
+        console.log(res);
+      },
+      (err) => this.error = err
+    );
   }
 
 }
