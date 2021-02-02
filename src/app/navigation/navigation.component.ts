@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, HostListener } from '@angular/core';
-import { Router, ActivationStart, NavigationEnd, Event as NavigationEvent } from '@angular/router';
+import { Router, ActivatedRoute, UrlSegment, NavigationEnd, Event as NavigationEvent, Params, ParamMap } from '@angular/router';
 
 
 @Component({
@@ -12,40 +12,34 @@ export class NavigationComponent implements OnInit {
   @ViewChild('stickyMenu') menuElement: ElementRef;
 
   sticky: boolean = false;
-  template: string = "";
-
-
   elementPosition: any;
 
-  constructor( private router: Router) { 
+  title: string;
+  breadcrumbs: any[] = [];
+
+  constructor( private router:Router, private active:ActivatedRoute) { 
   
     
    }
 
   ngOnInit(): void {
-    //const title = this.route.snapshot.paramMap.get('title')?this.route.snapshot.paramMap.get('title').split('_').join(' '):null;
-    console.log(window.location.pathname.substring(1));
+    
     this.router.events.subscribe(
     (event: NavigationEvent) => {
-      if(event instanceof ActivationStart) {
-        console.log("start ", event.snapshot, " - ");
-      }
       if(event instanceof NavigationEnd) {
-        console.log("END ", event.url, " - ");
+        this.breadcrumbs = this.active.firstChild.snapshot.data.breacrumb;
+        this.title = this.active.firstChild.snapshot.params.title;
+        console.log(this.breadcrumbs, this.title);
       }
+      
     });
 
-    
   }
 
   ngAfterViewInit(){
     this.elementPosition = this.menuElement.nativeElement.offsetTop;
-    
- 
 
   }
-
-  
 
   @HostListener('window:scroll', ['$event'])
     handleScroll(){
@@ -56,6 +50,4 @@ export class NavigationComponent implements OnInit {
         this.sticky = false;
       }
     }
- 
-
 }
