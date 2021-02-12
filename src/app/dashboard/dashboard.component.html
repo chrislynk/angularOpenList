@@ -3,25 +3,33 @@
   <div *ngIf="success">{{success}}</div>
 
   <div>
-    <label>Name:
-      <input #listName />
-    </label>
-    <!-- (click) passes input value to add() and then clears the input -->
-    <button (click)="addInfo(listName.value); listName.value=''">
-      add List
-    </button>
+    <input #title />
+    <select #template disabled>
+      <option value="List" selected>List</option>
+    </select>
+    <button id="addItem" title="add item" class="svg rght" (click)="addInfo(title.value, template.value); title.value=''">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" >
+        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+      </svg></button>
+    
+ 
   </div>
 
-<div id="theList" class="card-container">
+<div id="theList" class="card-container"  *ngIf="information!=null">
  
-    <a class="card" rel="noopener" *ngFor="let info of information" >
+    <a class="card" rel="noopener" *ngFor="let info of information"  (click)="selectListItem(info.title)">
       
       <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" routerLink="/{{info.template|lowercase}}/{{info.title.split(' ').join('_')}}"><path d="M4 14h4v-4H4v4zm0 5h4v-4H4v4zM4 9h4V5H4v4zm5 5h12v-4H9v4zm0 5h12v-4H9v4zM9 5v4h12V5H9z"/></svg>
       
-      <span>{{info.title}}</span>
-      <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" routerLink="/{{info.template|lowercase}}/{{info.title.split(' ').join('_')}}"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+      <span *ngIf="editItem!=info.title">{{info.title}}</span>
+      <svg *ngIf="editItem!=info.title" class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" routerLink="/{{info.template|lowercase}}/{{info.title.split(' ').join('_')}}"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+      <span *ngIf="editItem==info.title">
+        <input #selectedBox id="selectedBox" name="selectedBox" value="{{info.title}}" autofocus />
+        <button id="update" class="svg right" title="update item" (click)="updateInfo(selectedBox.value)"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" transform="rotate(-90)"><path d="M 13.41 12 L 6.41 5 L 5 6.41 L 5 17.59 L 6.41 19 z"></path></svg>
+        </button>
+      </span>
     
-      <button title="delete item" class="delete svg right-top"><svg  xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" style="fill: white;" (click)="deleteInfo(info.id)"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg></button>
+      <button *ngIf="selected==info.title && editItem!=info.title" title="delete item" class="delete svg right-top"><svg  xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" style="fill: white;" (click)="deleteInfo(info.id)"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg></button>
     </a>
     
 

@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Info } from '../info';
 import { InfoService } from '../info.service';
 
+import { ListComponent } from '../list/list.component';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -11,18 +13,19 @@ import { InfoService } from '../info.service';
 })
 
 export class DashboardComponent implements OnInit {
+
   information: Info[];
-  safeTitle: {};
+
   error = '';
   success = '';
 
-  constructor(
-    private route: ActivatedRoute,
-    private infoService: InfoService
-  ) { }
+  selected = '';
+  editItem = '';
+
+  constructor(private route: ActivatedRoute, private infoService: InfoService) {  }
 
   ngOnInit() {
-    this.getInformation();
+    this.getAll();
   }
 
   getAll(): void {
@@ -36,61 +39,58 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  getId(id:number): void {
-    this.success = ''; this.error = '';
-    this.infoService.getId(id).subscribe(
-      (res: Info) => {
-        this.information.push(res);
-      },
-      (err) => {
-        this.error = err+" ("+id+")";
-      }
-    );
-  }
-
-  getDashboard(name: string): void{
-    let ids: Number[]; //Dashboard contains a list of Ids of other Infos
-    this.infoService.getTitle(name, "Dashboard").subscribe(
-      (res: Info) => {
-        for (let i in res["content"]) {
-          this.getId(+i);
-        }
-      },
-      (err) => {
-        this.error = err;
-      }
-    );
-  }
-
-  getInformation(): void {
-    const title = this.route.snapshot.paramMap.get('title');
-    if(title == null){ this.getAll(); } else { this.getDashboard(title); }
-  }
-
-  addInfo(name: string): void {
-    name = name.trim();
-    this.infoService.addInfo(name)
+  addInfo(title: string, template: string): void {
+    title = title.trim();
+    this.infoService.addInfo(title, template)
       .subscribe(
         (res: Info[]) => {
           this.information = res;
-          this.success = 'Created Successfully';
-          console.log(res);
+          this.success = title + ' Created Successfully';
         },
         (err) => this.error = err
       );
   }
 
-  deleteInfo(id:number): void {
+  updateInfo(title:string){
+    const infos:Info[] = this.infoService.cloneInfo(this.information);
+    for (let c in infos) {
+      if(infos[c]["title"] == this.editItem){
+        infos[c]["title"] = title;
+        this.infoService.updateInfo( infos[c] )
+          .subscribe(
+            (res: Info) => {
+              this.information[c] = res;
+              this.success = 'Updated successfully';
+            },
+            (err) => this.error = err
+          );
+      }
+      
+    }
+  }
 
+  deleteInfo(id:number): void {
     this.infoService.deleteInfo(id)
     .subscribe(
       (res: Info[]) => {
         this.information = res;
         this.success = 'Deleted Successfully';
-        console.log(res);
       },
       (err) => this.error = err
     );
   }
+
+  selectListItem(item:string){ 
+    console.log(item," - ",this.selected,"/",this.editItem);
+    if(this.selected == item){ //Item selected 2nd time
+      this.editItem = item; 
+      this.selected = "";
+    } else { 
+      this.selected = item;
+    }
+  }
+
+  
+  
 
 }
