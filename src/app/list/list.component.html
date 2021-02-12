@@ -5,38 +5,28 @@
 
 <h2>{{title}}</h2>
 <input #searchBox id="search-box" />
-    <button id="addItem" title="add item" class="svg rght" (click)="addContent(searchBox.value); searchBox.value=''">
-      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" style="fill: white;">
+    <button id="addItem" title="add item" class="svg rght" (click)="addListItem(searchBox.value); searchBox.value=''">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" >
         <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
       </svg></button>
 
-<div id="theList" class="card-container">
+<div id="theList" class="card-container" *ngIf="list!=null">
  
-  <a class="card" rel="noopener" *ngFor="let item of content">
+  <a class="card" rel="noopener" *ngFor="let item of list.content" (click)="selectListItem(item)">
     
-    <svg *ngIf="selected!=item" class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" (click)="selectContent(item)"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+    <svg *ngIf="editItem!=item" class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" (click)="selectEditItem(item)"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
 
-    <span *ngIf="selected!=item">{{item}}</span>
-    <svg *ngIf="selected!=item" class="material-icons spacer" xmlns="http://www.w3.org/2000/svg" width="8px" height="8px" viewBox="0 0 24 24" (click)="selectContent(item)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg> 
-    <span *ngIf="selected==item">
-      <input #selectedBox id="selectedBox" value="{{item}}" />
-      <button id="update" class="svg right" title="update item" (click)="updateContent(selectedBox.value)"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" transform="rotate(-90)"><path d="M 13.41 12 L 6.41 5 L 5 6.41 L 5 17.59 L 6.41 19 z"></path></svg>
+    <span *ngIf="editItem!=item" >{{item}}</span>
+    <svg *ngIf="editItem!=item" class="material-icons spacer" xmlns="http://www.w3.org/2000/svg" width="8px" height="8px" viewBox="0 0 24 24" ><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg> 
+    <span *ngIf="editItem==item">
+      <input #selectedBox id="selectedBox" name="selectedBox" value="{{item}}" autofocus />
+      <button id="update" class="svg right" title="update item" (click)="updateListItem(selectedBox.value)"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" transform="rotate(-90)"><path d="M 13.41 12 L 6.41 5 L 5 6.41 L 5 17.59 L 6.41 19 z"></path></svg>
       </button>
     </span>
-    
-    <button *ngIf="selected!=item" title="delete item" class="delete svg right-top"><svg  xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" style="fill: white;" (click)="deleteContent(item)"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg></button>
+
+    <button *ngIf="selected==item && editItem!=item" title="delete item" class="delete svg right-top"><svg  xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" style="fill: white;" (click)="deleteListItem(item)"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg></button>
 
   </a>
-
-  <a class="card" *ngFor="let list of lists" routerLink="/{{list.template|lowercase}}/{{list.title.split(' ').join('_')}}">
-
-    <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M4 14h4v-4H4v4zm0 5h4v-4H4v4zM4 9h4V5H4v4zm5 5h12v-4H9v4zm0 5h12v-4H9v4zM9 5v4h12V5H9z"/></svg>
-    <span>{{list.title}}</span>
-    <svg class="material-icons right-top" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-    <button title="delete item" class="delete svg right-top"><svg  xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" style="fill: white;"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg></button>
-
-  </a>
-  
 
 </div>
 

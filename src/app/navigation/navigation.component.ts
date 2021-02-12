@@ -29,7 +29,6 @@ export class NavigationComponent implements OnInit {
       if(event instanceof NavigationEnd) {
         this.breadcrumbs = this.active.firstChild.snapshot.data.breacrumb;
         this.title = this.active.firstChild.snapshot.params.title;
-        console.log(this.breadcrumbs, this.title);
       }
       
     });

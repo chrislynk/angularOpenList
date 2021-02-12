@@ -32,7 +32,7 @@ if($result = mysqli_query($con,$sql))
       $i++;
     }
 
-    if(isset($_POST['id']) || ( $_POST['title'] && $_POST['template'] ) ){ 
+    if(isset($_POST['id']) || ( isset($_POST['title']) && isset($_POST['template']) ) ){ 
       echo json_encode($info[0]); } else { echo json_encode($info); }
 
   } else { http_response_code(404); }

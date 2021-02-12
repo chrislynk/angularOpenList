@@ -1,9 +1,10 @@
+import { isNull } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 //import { CommonModule } from '@angular/common';
 
-import { Info } from '../info';
+import { List } from '../info';
 import { InfoService } from '../info.service';
 
 @Component({
@@ -13,88 +14,87 @@ import { InfoService } from '../info.service';
 })
 
 export class ListComponent implements OnInit {
-  lists: Info[];
-  id: number;
-  content: Array<string>;
+
+  template: string = "List";
   title: string;
-  search = '';
-  selected = '';
+
+  list: List;
+
   error = '';
   success = '';
+
+  selected = '';
+  editItem = '';
+
   constructor(
-    private route: ActivatedRoute,
-    private infoService: InfoService
+    protected route: ActivatedRoute,
+    protected infoService: InfoService
   ){ }
 
   ngOnInit() {
+    this.title = this.route.snapshot.paramMap.get('title')?this.route.snapshot.paramMap.get('title').split('_').join(' '):null;
     this.getInfo();
   }
 
   getInfo(): void {
-    this.success = ''; this.error = ''; this.search = ''; this.selected = '';
-    const title = this.route.snapshot.paramMap.get('title')?this.route.snapshot.paramMap.get('title').split('_').join(' '):null;
- 
-    if(title){
-      this.infoService.getTitle(title,"List").subscribe(
-        (res: Info) => {
-          this.title = res["title"];
-          this.content = res["content"]?res["content"]:new Array();
-          this.id = res["id"];
+   // if(this.title != null){
+      this.infoService.getTitle(this.title,this.template).subscribe(
+        (res: List) => {
+          this.list = res;
+          console.log(this.list);
         },
         (err) => {
           this.error = err;
         }
       );
-    } else {
-      this.infoService.getTemplates("List").subscribe(
-        (res: Info[]) => {
-          this.lists = res;
-        },
-        (err) => {
-          this.error = err;
-        }
-      );
-    }
-
+    //} else { this.error = "Something went wrong - Title"; }
   }
 
-  updateInfo(title:string, content, id:number) {
-    this.success = ''; this.error = ''; this.search = ''; this.selected = '';
-  
-    this.infoService.updateInfo({ title: title, content: content, id: +id, template: "List" })
+  updateInfo(info: List) {
+    this.success = ''; this.error = ''; this.selected = '';  this.editItem='';
+    this.infoService.updateInfo(info)
       .subscribe(
-        (res: Info) => {
+        (res: List) => {
+          this.list = res;
           this.success = 'Updated successfully';
         },
         (err) => this.error = err
       );
   }
 
-  addContent(item:string) {
-    this.content.push(item);
-    this.updateInfo( this.title, this.content, +this.id );
+  addListItem(item:string) {
+    if(!this.list["content"]){ this.list["content"] = Array<String>(); }
+    const info:List = this.infoService.cloneInfo(this.list);
+    info["content"].push(item);
+    this.updateInfo( info );
   }
 
-  deleteContent(item:string) {
-    for (let c in this.content) {
-      if(this.content[c] == item){ 
-        const i = +c;
-        this.content.splice(i,1);
-        this.updateInfo( this.title, this.content, +this.id );
+  deleteListItem(item:string) {
+    for (let c in this.list["content"]) {
+      if(this.list["content"][c] == item){ 
+        this.list["content"].splice(c,1);
+        this.updateInfo(this.list);
       }
     }
   }
-
-  selectContent(item:string){
-    this.selected = item;
+ 
+  selectListItem(item:string){ 
+    if(this.selected == item){ //Item selected 2nd time
+      this.editItem = item; 
+      this.selected = "";
+    } else { 
+      this.selected = item;
+    }
   }
 
-  updateContent(item:string){
-    for (let c in this.content) {
-      if(this.content[c] == this.selected){ 
-        const i = +c;
-        this.content[i] = item;
-        this.updateInfo( this.title, this.content, +this.id );
+  selectEditItem(item:string){ this.editItem = item; this.selected = ""; }
+
+  updateListItem(item:string){
+    const info:List = this.infoService.cloneInfo(this.list);
+    for (let c in info["content"]) {
+      if(info["content"][c] == this.editItem){ 
+        info["content"][c] = item;
+        this.updateInfo( info );
       }
     }
   }
