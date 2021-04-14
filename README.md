@@ -15,7 +15,7 @@ To begin we start with a **List**, a basic Template as simple as a comma separat
   - [ ] **Table**: a List by Template created with a list of inputs (arr of obj). 
 `[{<col>:<value>, ... } ... ]`
   - [ ] **Tracker**: a List of Unique dates each with an entry (date-str indexed obj  of data) 
-`{<date-str>:<str/num/obj>, ... }`
+`{<date-str>:<str/num(scale)/obj(list of inputs)>, ... }`
 - [ ] **Page**: a Title (page title) with a body represented as a hierarchical list and/or <html> 
 `[<list>,...] or <html>`
   - [ ] **Post**: A Page with a Date
